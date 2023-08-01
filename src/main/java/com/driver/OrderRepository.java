@@ -114,20 +114,20 @@ public class OrderRepository {
         }
     }
 
-    public void printAllDbs() {
-        for(String id : orderDb.keySet())
-            System.out.println(id + " " + orderDb.get(id));
-
-        for(String id : partnersDb.keySet())
-            System.out.println(id + " " + partnersDb.get(id));
-
-        for(String id : order_partners_db.keySet())
-            System.out.println(id + " " + order_partners_db.get(id));
-
-        for(String id : partnersDb.keySet()) {
-            for (String order : partners_order_list.get(id))
-                System.out.print(order + " ,");
-            System.out.println();
-        }
-    }
+//    public void printAllDbs() {
+//        for(String id : orderDb.keySet())
+//            System.out.println(id + " " + orderDb.get(id));
+//
+//        for(String id : partnersDb.keySet())
+//            System.out.println(id + " " + partnersDb.get(id));
+//
+//        for(String id : order_partners_db.keySet())
+//            System.out.println(id + " " + order_partners_db.get(id));
+//
+//        for(String id : partnersDb.keySet()) {
+//            for (String order : partners_order_list.get(id))
+//                System.out.print(order + " ,");
+//            System.out.println();
+//        }
+//    }
 }

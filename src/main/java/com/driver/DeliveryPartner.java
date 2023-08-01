@@ -22,11 +22,11 @@ public class DeliveryPartner {
         this.numberOfOrders = numberOfOrders;
     }
 
-    @Override
-    public String toString() {
-        return "DeliveryPartner{" +
-                "id='" + id + '\'' +
-                ", numberOfOrders=" + numberOfOrders +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "DeliveryPartner{" +
+//                "id='" + id + '\'' +
+//                ", numberOfOrders=" + numberOfOrders +
+//                '}';
+//    }
 }

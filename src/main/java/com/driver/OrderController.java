@@ -139,9 +139,9 @@ public class OrderController {
         return new ResponseEntity<>(orderId + " removed successfully", HttpStatus.CREATED);
     }
 
-    @GetMapping("/print")
-    public ResponseEntity<String> printAllDbs() {
-        orderService.printAllDbs();
-        return new ResponseEntity<>("Printed All Dbs", HttpStatus.ACCEPTED);
-    }
+//    @GetMapping("/print")
+//    public ResponseEntity<String> printAllDbs() {
+//        orderService.printAllDbs();
+//        return new ResponseEntity<>("Printed All Dbs", HttpStatus.ACCEPTED);
+//    }
 }

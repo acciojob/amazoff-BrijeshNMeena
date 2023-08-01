@@ -72,7 +72,7 @@ public class OrderService {
         orderRepository.deleteOrderById(orderId);
     }
 
-    public void printAllDbs() {
-        orderRepository.printAllDbs();
-    }
+  //  public void printAllDbs() {
+  //      orderRepository.printAllDbs();
+   // }
 }
