@@ -25,13 +25,21 @@ public class OrderRepository {
     }
 
     public void addOrderPartnerPair(String orderId, String partnerId) {
-        order_partners_db.put(orderId, partnerId);
-        List<String> ordersList = partners_order_list.getOrDefault(partnerId, new ArrayList<>());
-        ordersList.add(orderId);
-        partners_order_list.put(partnerId, ordersList);
-        DeliveryPartner dp = partnersDb.get(partnerId);
-        dp.setNumberOfOrders(dp.getNumberOfOrders()+1);
-        partnersDb.put(partnerId, dp);
+        if(orderDb.containsKey(orderId) && partnersDb.containsKey(partnerId)) {
+            order_partners_db.put(orderId, partnerId);
+
+            List<String> ordersList = new ArrayList<>();
+            if(partners_order_list.containsKey(partnerId)) {
+                ordersList = partners_order_list.get(partnerId);
+            }
+
+            ordersList.add(orderId);
+            partners_order_list.put(partnerId, ordersList);
+
+            DeliveryPartner dp = partnersDb.get(partnerId);
+//            dp.setNumberOfOrders(dp.getNumberOfOrders() + 1);
+            dp.setNumberOfOrders(ordersList.size());
+        }
     }
 
     public Order getOrderById(String orderId) {
@@ -43,11 +51,11 @@ public class OrderRepository {
     }
 
     public Integer getOrderCountByPartnerId(String partnerId) {
-        if(partners_order_list.containsKey(partnerId)) {
-            return partners_order_list.get(partnerId).size();
-        }
+//        if(partners_order_list.containsKey(partnerId)) {
+//            return partners_order_list.get(partnerId).size();
+//        }
 
-        return 0;
+        return partnersDb.get(partnerId).getNumberOfOrders();
     }
 
     public List<String> getOrdersByPartnerId(String partnerId) {
@@ -67,13 +75,13 @@ public class OrderRepository {
     }
 
     public Integer getCountOfUnassignedOrders() {
-        Integer count = 0;
-        for(String orderId : orderDb.keySet()) {
-            if(!order_partners_db.containsKey(orderId))
-                count++;
-        }
+//        Integer count = 0;
+//        for(String orderId : orderDb.keySet()) {
+//            if(!order_partners_db.containsKey(orderId))
+//                count++;
+//        }
 
-        return count;
+        return orderDb.size()-order_partners_db.size();
     }
 
     public Integer getOrdersLeftAfterGivenTimeByPartnerId(int time, String partnerId) {
@@ -109,25 +117,11 @@ public class OrderRepository {
     public void deleteOrderById(String orderId) {
         orderDb.remove(orderId);
         if(order_partners_db.containsKey(orderId)) {
-            partners_order_list.get(order_partners_db.get(orderId)).remove(orderId);
+            String partner = order_partners_db.get(orderId);
+            partners_order_list.get(partner).remove(orderId);
             order_partners_db.remove(orderId);
+            partnersDb.get(partner).setNumberOfOrders(partners_order_list.get(partner).size());
         }
     }
 
-//    public void printAllDbs() {
-//        for(String id : orderDb.keySet())
-//            System.out.println(id + " " + orderDb.get(id));
-//
-//        for(String id : partnersDb.keySet())
-//            System.out.println(id + " " + partnersDb.get(id));
-//
-//        for(String id : order_partners_db.keySet())
-//            System.out.println(id + " " + order_partners_db.get(id));
-//
-//        for(String id : partnersDb.keySet()) {
-//            for (String order : partners_order_list.get(id))
-//                System.out.print(order + " ,");
-//            System.out.println();
-//        }
-//    }
 }

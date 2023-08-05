@@ -12,11 +12,9 @@ public class Order {
 
         this.id = id;
 
-        deliveryTime.trim();
-        int hour = Integer.parseInt(deliveryTime.substring(0, 2));
-        int min = Integer.valueOf(deliveryTime.substring(2));
+        String time[] = deliveryTime.split(":");
 
-        this.deliveryTime = hour*60 + min;
+        this.deliveryTime = Integer.parseInt(time[0])*60 + Integer.parseInt(time[1]);
 
     }
 

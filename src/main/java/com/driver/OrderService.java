@@ -47,21 +47,25 @@ public class OrderService {
         return orderRepository.getCountOfUnassignedOrders();
     }
 
-    public Integer getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId) {
-        time.trim();
-        int hour = Integer.parseInt(time.substring(0, 2));
-        int min = Integer.valueOf(time.substring(2));
+    public Integer getOrdersLeftAfterGivenTimeByPartnerId(String deliveryTime, String partnerId) {
+        String time[] = deliveryTime.split(":");
 
-        int deliveryTime = hour*60 + min;
-        return orderRepository.getOrdersLeftAfterGivenTimeByPartnerId(deliveryTime, partnerId);
+        int newTime = Integer.parseInt(time[0])*60 + Integer.parseInt(time[1]);
+
+        return orderRepository.getOrdersLeftAfterGivenTimeByPartnerId(newTime, partnerId);
     }
 
     public String getLastDeliveryTimeByPartnerId(String partnerId) {
         int time = orderRepository.getLastDeliveryTimeByPartnerId(partnerId);
-        int min = time % 60;
-        int hour = (time - min) / 60;
+        String HH = String.valueOf(time / 60);
+        String MM = String.valueOf(time % 60);
 
-        return hour + "" + min;
+        if(HH.length() < 2)
+            HH = "0" + HH;
+        if(MM.length() < 2)
+            MM = "0" + MM;
+
+        return HH + ":" + MM;
     }
 
     public void deletePartnerById(String partnerId) {
@@ -72,7 +76,4 @@ public class OrderService {
         orderRepository.deleteOrderById(orderId);
     }
 
-  //  public void printAllDbs() {
-  //      orderRepository.printAllDbs();
-   // }
 }
