@@ -25,21 +25,27 @@ public class OrderRepository {
     }
 
     public void addOrderPartnerPair(String orderId, String partnerId) {
-        if(orderDb.containsKey(orderId) && partnersDb.containsKey(partnerId)) {
-            order_partners_db.put(orderId, partnerId);
-
-            List<String> ordersList = new ArrayList<>();
-            if(partners_order_list.containsKey(partnerId)) {
-                ordersList = partners_order_list.get(partnerId);
-            }
-
-            ordersList.add(orderId);
-            partners_order_list.put(partnerId, ordersList);
-
-            DeliveryPartner dp = partnersDb.get(partnerId);
-//            dp.setNumberOfOrders(dp.getNumberOfOrders() + 1);
-            dp.setNumberOfOrders(ordersList.size());
-        }
+        List<String> list = partners_order_list.getOrDefault(partnerId, new ArrayList<>());
+        list.add(orderId);
+        partners_order_list.put(partnerId, list);
+        order_partners_db .put(orderId, partnerId);
+        DeliveryPartner partner = partnersDb .get(partnerId);
+        partner.setNumberOfOrders(list.size());
+//        if(orderDb.containsKey(orderId) && partnersDb.containsKey(partnerId)) {
+//            order_partners_db.put(orderId, partnerId);
+//
+//            List<String> ordersList = new ArrayList<>();
+//            if(partners_order_list.containsKey(partnerId)) {
+//                ordersList = partners_order_list.get(partnerId);
+//            }
+//
+//            ordersList.add(orderId);
+//            partners_order_list.put(partnerId, ordersList);
+//
+//            DeliveryPartner dp = partnersDb.get(partnerId);
+////            dp.setNumberOfOrders(dp.getNumberOfOrders() + 1);
+//            dp.setNumberOfOrders(ordersList.size());
+//        }
     }
 
     public Order getOrderById(String orderId) {
