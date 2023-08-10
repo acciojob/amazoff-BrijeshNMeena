@@ -29,7 +29,7 @@ public class OrderRepository {
         list.add(orderId);
         partners_order_list.put(partnerId, list);
         order_partners_db .put(orderId, partnerId);
-        DeliveryPartner partner = partnersDb .get(partnerId);
+        DeliveryPartner partner = partnersDb.get(partnerId);
         partner.setNumberOfOrders(list.size());
 //        if(orderDb.containsKey(orderId) && partnersDb.containsKey(partnerId)) {
 //            order_partners_db.put(orderId, partnerId);
